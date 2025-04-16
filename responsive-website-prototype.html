@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gayatri Grapes Garden</title>
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        .header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 50px;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            font-size: 1.2rem;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #2e7d32;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            padding: 8px 0;
+            color: #555;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: #2e7d32;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #2e7d32;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('banner.webp') no-repeat center center/cover;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .hero-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #2e7d32;
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #1b5e20;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #7cb342;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #558b2f;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: #2e7d32;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 60px 0;
+            background-color: #f1f8e9;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            color: #2e7d32;
+        }
+        
+        .product-info p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #ff6f00;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 60px 0;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            font-size: 80px;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            color: rgba(46, 125, 50, 0.1);
+            font-family: serif;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-content p {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .testimonial-author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #e8f5e9;
+        }
+        
+        .author-info h4 {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .author-info p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 60px 0;
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .cta p {
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-white {
+            background-color: white;
+            color: #2e7d32;
+        }
+        
+        .btn-white:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: #2e7d32;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a {
+            color: #bbb;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            color: #bbb;
+            margin-bottom: 10px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: #2e7d32;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 991px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                background: white;
+                width: 100%;
+                height: calc(100vh - 70px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 40px;
+                transition: left 0.3s ease;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-link {
+                font-size: 1.2rem;
+            }
+            
+            .hero {
+                padding: 60px 20px;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1rem;
+            }
+            
+            .logo img {
+                height: 40px;
+            }
+            
+            .product-buttons {
+                flex-direction: column;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .testimonial-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <img src="logo.png" alt="Gayatri Grapes Garden Logo">
+                    <h1>Gayatri Grapes Garden</h1>
+                </div>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#products" class="nav-link">Products</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Fresh Premium Quality Fruits</h2>
+                <p>Experience the finest grapes and watermelons sourced directly from our farms to your table. We guarantee freshness, flavor, and quality with every bite.</p>
+                <a href="#products" class="btn">Explore Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="farm.jpg" alt="Our Farm">
+                </div>
+                <div class="about-text">
+                    <h3>The Gayatri Grapes Garden Story</h3>
+                    <p>Founded in 2010, Gayatri Grapes Garden has been dedicated to growing the finest quality grapes and watermelons in the fertile soils of Maharashtra. Our commitment to sustainable farming practices ensures that every fruit we produce is not only delicious but also grown with respect for nature.</p>
+                    <p>We take pride in our expert farming techniques passed down through generations, combined with modern agricultural innovations to deliver fruits that exceed industry standards.</p>
+                    <p>At Gayatri Grapes Garden, we believe in transparent farm-to-table practices, allowing our customers to buy with confidence and our farmers to sell with pride.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Our Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="grapes.jpg" alt="Fresh Table Grapes">
+                    </div>
+                    <div class="product-info">
+                        <h3>Fresh Table Grapes</h3>
+                        <p>Export quality seedless grapes, handpicked at the perfect ripeness to ensure maximum sweetness and juiciness. Available in convenient 500g packs.</p>
+                        <div class="product-price">₹120 per 500g</div>
+                        <div class="product-buttons">
+                            <a href="#" class="btn">Buy Now</a>
+                            <a href="#" class="btn btn-secondary">Sell</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="watermelon.jpg" alt="Premium Watermelons">
+                    </div>
+                    <div class="product-info">
+                        <h3>Premium Watermelons</h3>
+                        <p>Sweet and refreshing watermelons with vibrant red flesh and high water content. Perfect for hot summer days and healthy snacking.</p>
+                        <div class="product-price">₹80 per kg</div>
+                        <div class="product-buttons">
+                            <a href="#" class="btn">Buy Now</a>
+                            <a href="#" class="btn btn-secondary">Sell</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>The grapes from Gayatri Gardens are simply outstanding. Sweet, juicy, and consistently fresh. I've been a regular customer for over 2 years now.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-img">
+                                <img src="dummy.png" alt="Customer">
+                            </div>
+                            <div class="author-info">
+                                <h4>Amit Sharma</h4>
+                                <p>Regular Customer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>As a restaurant owner, quality matters. Gayatri's watermelons are the best I've found in the region - sweet, ripe, and perfect for our summer menu.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-img">
+                                <img src="dummy.png" alt="Customer">
+                            </div>
+                            <div class="author-info">
+                                <h4>Priya Patel</h4>
+                                <p>Restaurant Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>I've been selling my grapes through Gayatri Garden for three seasons now. Fair prices and professional handling of my produce every time.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-img">
+                                <img src="dummy.png" alt="Customer">
+                            </div>
+                            <div class="author-info">
+                                <h4>Rajesh Kumar</h4>
+                                <p>Grape Grower</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Experience Farm-Fresh Goodness?</h2>
+            <p>Whether you're looking to buy premium fruits or sell your harvest, Gayatri Grapes Garden is your trusted partner for all grape and watermelon needs.</p>
+            <a href="#contact" class="btn btn-white">Contact Us Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Gayatri Grapes Garden</h3>
+                    <p>Premium quality grapes and watermelons directly from farms to your table.</p>
+                    <div class="social-links">
+                        <a href="#">FB</a>
+                        <a href="#">IG</a>
+                        <a href="#">TW</a>
+                        <a href="#">YT</a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#">Table Grapes</a></li>
+                        <li><a href="#">Watermelons</a></li>
+                        <li><a href="#">Wholesale</a></li>
+                        <li><a href="#">Seasonal Offers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>Nashik, Maharashtra, India</p>
+                    <p>Phone: +91 9876543210</p>
+                    <p>Email: info@gayatrigrapesgarden.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Gayatri Grapes Garden. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                });
+                
+                // Close menu when clicking a link
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                    });
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Active link highlighting based on scroll position
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.pageYOffset >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === `#${current}`) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
